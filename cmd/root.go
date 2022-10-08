@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/aloder/tojen/gen"
 	"github.com/spf13/cobra"
+	"github.com/zeus-fyi/tojen/gen"
 )
 
 func Execute() {
@@ -34,8 +34,8 @@ func Execute() {
 				os.Exit(1)
 			}
 			if len(args) == 2 {
-				osFile, err := os.Create(args[1])
-				if err != nil {
+				osFile, e := os.Create(args[1])
+				if e != nil {
 					fmt.Println(err)
 					os.Exit(1)
 				}

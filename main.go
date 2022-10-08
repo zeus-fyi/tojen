@@ -1,6 +1,6 @@
 package main
 
-import "github.com/aloder/tojen/cmd"
+import "github.com/zeus-fyi/tojen/cmd"
 
 func main() {
 	cmd.Execute()
