@@ -25,7 +25,6 @@ func funcDecl(s *ast.FuncDecl) jen.Code {
 }
 
 var paths = map[string]string{}
-var formating = false
 
 // GenerateFileBytes takes an array of bytes and transforms it into jennifer
 // code
@@ -81,7 +80,7 @@ func imports(imports []*ast.ImportSpec) (map[string]string, []jen.Code) {
 // and if you want a main function or not
 func GenerateFile(s []byte, packName string, main bool) *jen.File {
 	file := jen.NewFile(packName)
-	astFile := parseFile(s)
+	astFile := ParseFile(s)
 	var anonImports []jen.Code
 	// paths is a global variable to map the exported object to the import
 	paths, anonImports = imports(astFile.Imports)
@@ -89,7 +88,7 @@ func GenerateFile(s []byte, packName string, main bool) *jen.File {
 	// generate the generative code based on the file
 	decls := []string{}
 	for _, decl := range astFile.Decls {
-		code, name := makeJenCode(decl)
+		code, name := MakeJenCode(decl)
 		file.Add(code)
 		decls = append(decls, name)
 	}
@@ -133,7 +132,7 @@ func genMainFunc() jen.Code {
 	)
 }
 
-func makeJenCode(s ast.Decl) (jen.Code, string) {
+func MakeJenCode(s ast.Decl) (jen.Code, string) {
 	inner := jen.Null()
 	name := ""
 	switch t := s.(type) {
@@ -146,13 +145,14 @@ func makeJenCode(s ast.Decl) (jen.Code, string) {
 	}
 	return makeJenFileFunc(name, inner), name
 }
+
 func makeJenFileFunc(name string, block jen.Code) jen.Code {
 	return jen.Func().Id(name).Params().Qual(jenImp, "Code").Block(
 		jen.Return().Add(block),
 	)
 }
 
-func parseFile(code []byte) *ast.File {
+func ParseFile(code []byte) *ast.File {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, "", code, parser.ParseComments)
 	if err != nil {
