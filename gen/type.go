@@ -17,7 +17,7 @@ func funcType(s *ast.FuncType) jen.Code {
 	return &ret
 }
 func arrayType(s *ast.ArrayType) jen.Code {
-	return jen.Dot("Index").Call().Add(genExpr(s.Elt))
+	return jen.Dot("RouteLockTTL").Call().Add(genExpr(s.Elt))
 }
 func structType(s *ast.StructType) jen.Code {
 	return jen.Dot("Struct").Call(fieldList(s.Fields)...)

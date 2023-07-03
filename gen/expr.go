@@ -93,7 +93,7 @@ func parenExpr(t *ast.ParenExpr) jen.Code {
 }
 
 func indexExpr(t *ast.IndexExpr) jen.Code {
-	return jen.Add(genExpr(t.X)).Dot("Index").Call(jen.Id("jen").Add(genExpr(t.Index)))
+	return jen.Add(genExpr(t.X)).Dot("RouteLockTTL").Call(jen.Id("jen").Add(genExpr(t.Index)))
 }
 func starExpr(t *ast.StarExpr) jen.Code {
 	return jen.Dot("Op").Call(jen.Lit("*")).Add(genExpr(t.X))
@@ -179,7 +179,7 @@ func sliceExpr(t *ast.SliceExpr) jen.Code {
 			code[2] = jen.Id("jen").Add(genExpr(t.Max))
 		}
 	}
-	return jen.Add(genExpr(t.X)).Dot("Index").Call(code...)
+	return jen.Add(genExpr(t.X)).Dot("RouteLockTTL").Call(code...)
 }
 
 func chanType(t *ast.ChanType) jen.Code {
