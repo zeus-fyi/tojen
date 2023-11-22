@@ -100,7 +100,7 @@ var tests = []tcg{
 	`,
 	},
 	tcg{
-		"Map",
+		"FileReferencesMap",
 		`package main
 
 	func main() {

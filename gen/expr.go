@@ -111,7 +111,7 @@ func keyValueExpr(t *ast.KeyValueExpr) jen.Code {
 }
 
 func mapType(t *ast.MapType) jen.Code {
-	ret := jen.Dot("Map").Call(
+	ret := jen.Dot("FileReferencesMap").Call(
 		jen.Id("jen").Add(genExpr(t.Key)),
 	).Add(genExpr(t.Value))
 	return ret
